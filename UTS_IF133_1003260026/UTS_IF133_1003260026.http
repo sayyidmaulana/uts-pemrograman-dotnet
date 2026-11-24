@@ -1,0 +1,91 @@
+@HostAddress = http://localhost:5135
+
+### 1. GET semua produk -> 200 OK
+GET {{HostAddress}}/api/products
+Accept: application/json
+
+### 2. POST tambah produk -> 201 Created (+ header Location)
+POST {{HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "code": "PRD-001",
+  "name": "Keyboard Mechanical",
+  "price": 750000,
+  "stock": 12,
+  "isActive": true
+}
+
+### 3. POST produk kedua -> 201 Created
+POST {{HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "code": "PRD-002",
+  "name": "Mouse Wireless",
+  "price": 250000,
+  "stock": 30,
+  "isActive": true
+}
+
+### 4. GET produk by id -> 200 OK
+GET {{HostAddress}}/api/products/1
+Accept: application/json
+
+### 5. GET produk yang tidak ada -> 404 Not Found
+GET {{HostAddress}}/api/products/999
+Accept: application/json
+
+### 6. PUT update produk -> 204 No Content
+PUT {{HostAddress}}/api/products/1
+Content-Type: application/json
+
+{
+  "code": "PRD-001",
+  "name": "Keyboard Mechanical RGB",
+  "price": 800000,
+  "stock": 10,
+  "isActive": true
+}
+
+### 7. PUT produk yang tidak ada -> 404 Not Found
+PUT {{HostAddress}}/api/products/999
+Content-Type: application/json
+
+{
+  "code": "PRD-999",
+  "name": "Tidak Ada",
+  "price": 1000,
+  "stock": 1,
+  "isActive": false
+}
+
+### 8. DELETE produk -> 204 No Content
+DELETE {{HostAddress}}/api/products/2
+
+### 9. DELETE produk yang sudah dihapus -> 404 Not Found
+DELETE {{HostAddress}}/api/products/2
+
+### (Tambahan) POST data tidak valid -> 400 Bad Request
+POST {{HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "code": "",
+  "name": "Harga Negatif",
+  "price": -5,
+  "stock": -1,
+  "isActive": true
+}
+
+### (Tambahan) POST kode duplikat -> 409 Conflict
+POST {{HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "code": "PRD-001",
+  "name": "Keyboard Duplikat",
+  "price": 100000,
+  "stock": 1,
+  "isActive": true
+}
